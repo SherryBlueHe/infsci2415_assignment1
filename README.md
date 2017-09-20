@@ -46,4 +46,11 @@ For by-state dataset (D2):
 For D1 by-race data, we will use [How the Giants of Finance Shrank, Then Grew, Under the Financial Crisis](http://www.nytimes.com/interactive/2009/09/12/business/financial-markets-graphic.html) as an example
 
 For D2 by-state data, we will use [Dorling Cartogram of Obesity in the United States (1995 to 2008)](https://homes.cs.washington.edu/~jheer//files/zoo/ex/maps/cartogram.html) as an example
+
+### Visulization samples:
+Can read codes from here. They are really helpful.
+https://github.com/d3/d3/wiki/Gallery
+
+
+
  
