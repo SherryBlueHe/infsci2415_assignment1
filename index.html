@@ -7,7 +7,6 @@ and open the template in the editor.
 <html> 
   <head> 
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-        
 <meta charset="utf-8">
 <style>
 
@@ -49,7 +48,7 @@ body {
 }
 
 </style>
-<select id="Year"  name="1" onchange="refresh()">   
+<select id="Year"  name="1">   
   <option   value="2015">2015</option>   
   <option   value="2014">2014</option>   
   <option   value="2013">2013</option>  
@@ -99,11 +98,11 @@ d3.csv(name, function(data) {
     console.log(data[0].Percent);
  
 
-  var config = {"color1":"#ffffff","color2":"#000000","stateDataColumn":"State","valueDataColumn":"Percent","Total_number":"Total"};
+  var config = {"color1":"#d3e5ff","color2":"#08306B","stateDataColumn":"State","valueDataColumn":"Percent","Total_number":"Total"};
   
   var WIDTH = 800, HEIGHT = 500;
   
-  var COLOR_COUNTS = 20;
+  var COLOR_COUNTS = 9;
   
   var SCALE = 0.7;
   
@@ -194,7 +193,6 @@ d3.csv(name, function(data) {
   var svg = d3.select("#canvas-svg").append("svg")
       .attr("width", width)
       .attr("height", height);
-
   
   d3.tsv("us-state-names.tsv", function(error, names) {
   
@@ -288,13 +286,6 @@ d3.csv(name, function(data) {
   });
 });
 
-
-</script>
-<script language="JavaScript">
-function refresh()
-{
-       window.location.reload();
-}
 </script>
     </body> 
 </html>
