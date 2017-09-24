@@ -7,7 +7,6 @@ and open the template in the editor.
 <html> 
   <head> 
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-        
 <meta charset="utf-8">
 <style>
 
@@ -79,10 +78,13 @@ body {
 </select>
 
 
+
+<svg id="chart" width="1000" height="600">
+
+  
+
+</svg>
 <div id="tooltip-container"></div>
-
-<div id="canvas-svg"></div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.1.0/topojson.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
@@ -90,20 +92,15 @@ body {
 
     var  myselect=document.getElementById("Year");
     var index =myselect.selectedIndex ; 
-    var name = myselect.options[index].value;
-    
-    name = "data/"+ name + ".csv"
-    console.log(name);
-d3.csv(name, function(data) {
-   
-    console.log(data[0].Percent);
- 
+    var year = myselect.options[index].value;
 
-  var config = {"color1":"#ffffff","color2":"#000000","stateDataColumn":"State","valueDataColumn":"Percent","Total_number":"Total"};
+d3.csv("data/by_race.csv", function(data) {
+   
+    console.log(data[25].Year);
+     var config = {"color1":"#d3e5ff","color2":"#08306B"};
   
   var WIDTH = 800, HEIGHT = 500;
-  
-  var COLOR_COUNTS = 20;
+   var COLOR_COUNTS = 10;
   
   var SCALE = 0.7;
   
@@ -132,7 +129,7 @@ d3.csv(name, function(data) {
           return colors;
       };
   }
-  
+
   function hexToRgb(hex) {
       var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
       return result ? {
@@ -141,38 +138,22 @@ d3.csv(name, function(data) {
           b: parseInt(result[3], 16)
       } : null;
   }
-  
-  function valueFormat(d) {
-    if (d > 1000000000) {
-      return Math.round(d / 1000000000 * 10) / 10 + "B";
-    } else if (d > 1000000) {
-      return Math.round(d / 1000000 * 10) / 10 + "M";
-    } else if (d > 1000) {
-      return Math.round(d / 1000 * 10) / 10 + "K";
-    } else {
-      return d;
-    }
-  }
-  
-  var COLOR_FIRST = config.color1, COLOR_LAST = config.color2;
-  
+
+function color(race){
+  console.log(race)
+  percent = race+"_Percent"
+  var COLOR_FIRST = "#A0A0A0", COLOR_LAST = "#000000";
+
   var rgb = hexToRgb(COLOR_FIRST);
   
   var COLOR_START = new Color(rgb.r, rgb.g, rgb.b);
   
   rgb = hexToRgb(COLOR_LAST);
   var COLOR_END = new Color(rgb.r, rgb.g, rgb.b);
-  
-  var MAP_STATE = config.stateDataColumn;
-  var MAP_VALUE = config.valueDataColumn;
-  var MAP_TOTAL = config.Total_number;
-  
-  var width = WIDTH,
-      height = HEIGHT;
-  
-  var valueById = d3.map();
-  var numById = d3.map();
-  
+  var quantize = d3.scale.quantize()
+      .domain([0, 1.0])
+      .range(d3.range(COLOR_COUNTS).map(function(i) { return i; }));
+
   var startColors = COLOR_START.getColors(),
       endColors = COLOR_END.getColors();
   
@@ -184,111 +165,212 @@ d3.csv(name, function(data) {
     var b = Interpolate(startColors.b, endColors.b, COLOR_COUNTS, i);
     colors.push(new Color(r, g, b));
   }
+    quantize.domain([d3.min(data, function(d){ 
+        if(d[percent]!= 0)
+            return +d[percent]; }),
+    d3.max(data, function(d){ 
+            return +d[percent]; })]);
+    console.log(d3.min(data, function(d){ 
+        if(d[percent]!= 0)
+            return +d[percent]}))
+        console.log(d3.max(data, function(d){ 
+        if(d[percent]!= 0)
+            return +d[percent]}))
+
+    if(race == "White")
+        var i = quantize(whitepByYear.get(year));
+    else if(race == "White_not_Hispanic")
+      var i = quantize(wnhpByYear.get(year));
+    else if(race == "Hispanic")
+      var i = quantize(hpByYear.get(year));
+    else if(race ==  "Black")
+      var i = quantize(blackpByYear.get(year));
+    else if(race == "Asian")
+      var i = quantize(asianpByYear.get(year));
+        var color = colors[i].getColors();
+        return "rgb(" + color.r + "," + color.g +
+                "," + color.b + ")";
+}
+
   
-  var quantize = d3.scale.quantize()
-      .domain([0, 1.0])
-      .range(d3.range(COLOR_COUNTS).map(function(i) { return i; }));
+  var MAP_STATE = config.stateDataColumn;
+  var MAP_VALUE = config.valueDataColumn;
+  var MAP_TOTAL = config.Total_number;
   
-  var path = d3.geo.path();
+  var width = WIDTH,
+      height = HEIGHT;
+  
+  var whiteByYear = d3.map();
+  var blackByYear = d3.map();
+  var wnhByYear = d3.map();
+  var asianByYear = d3.map();
+  var hByYear = d3.map();
+  var whitepByYear = d3.map();
+  var blackpByYear = d3.map();
+  var wnhpByYear = d3.map();
+  var asianpByYear = d3.map();
+  var hpByYear = d3.map();
   
   var svg = d3.select("#canvas-svg").append("svg")
       .attr("width", width)
       .attr("height", height);
 
-  
-  d3.tsv("us-state-names.tsv", function(error, names) {
-  
-  name_id_map = {};
-  id_name_map = {};
-  
-  for (var i = 0; i < names.length; i++) {
-    name_id_map[names[i].name] = names[i].id;
-    id_name_map[names[i].id] = names[i].name;
-  }
-  
   data.forEach(function(d) {
-    var id = name_id_map[d[MAP_STATE]];
-    valueById.set(id, +d[MAP_VALUE]); 
-    numById.set(id,+d[MAP_TOTAL]);
+    var id = d.Year;
+    whiteByYear.set(id, +d["White_Number"]); 
+    blackByYear.set(id, +d["Black_Number"]); 
+    wnhByYear.set(id, +d["White_not_Hispanic_Number"]); 
+    hByYear.set(id, +d["Hispanic_Number"]); 
+    asianByYear.set(id, +d["Asian_Number"]); 
+    whitepByYear.set(id, +d["White_Percent"]); 
+    blackpByYear.set(id, +d["Black_Percent"]); 
+    wnhpByYear.set(id, +d["White_not_Hispanic_Percent"]); 
+    hpByYear.set(id, +d["Hispanic_Percent"]); 
+    asianpByYear.set(id, +d["Asian_Percent"]); 
+
   });
-  
-  quantize.domain([d3.min(data, function(d){
-         
-            return +d[MAP_VALUE]; }),
-    d3.max(data, function(d){ 
-       
-            return +d[MAP_VALUE]; })]);
-  
-  d3.json("us.json", function(error, us) {
-    svg.append("g")
-        .attr("class", "states-choropleth")
-      .selectAll("path")
-        .data(topojson.feature(us, us.objects.states).features)
-      .enter().append("path")
-        .attr("transform", "scale(" + SCALE + ")")
-        .style("fill", function(d) {
-          if (valueById.get(d.id)) {
-            var i = quantize(valueById.get(d.id));
-            var color = colors[i].getColors();
-            return "rgb(" + color.r + "," + color.g +
-                "," + color.b + ")";
-          } else {
-            return "";
-          }
-        })
-        .attr("d", path)
-        .on("mousemove", function(d) {
+
+
+
+var data1 = [{
+  label: "White",
+  sales: whiteByYear.get(year)
+},{
+  label: "White_not_Hispanic",
+  sales: wnhByYear.get(year)
+}, {
+  label: "Black",
+  sales: blackByYear.get(year)
+},
+{
+  label: "Asian",
+  sales: asianByYear.get(year)
+},
+{
+  label: "Hispanic",
+  sales: hByYear.get(year)
+}
+
+]
+function getRate(race)
+{
+
+    if(race == "White")
+        return(whitepByYear.get(year));
+    else if(race == "White_not_Hispanic")
+      return(wnhpByYear.get(year));
+    else if(race == "Hispanic")
+      return(hpByYear.get(year));
+    else if(race ==  "Black")
+      return(blackpByYear.get(year));
+    else if(race == "Asian")
+      return(asianpByYear.get(year));
+
+}
+var count = 0;
+var count1 = 0;
+var g = d3.select('#chart')
+  .selectAll("g")
+  .data(data1)
+  .enter()
+  .append('g')
+g.append("circle")
+  .attr('cx', function(d){
+    if(count == 0)
+    {  
+      count++;
+      return 80;
+    }
+    else if(count == 1)
+    {
+      count++;
+      return 200;
+    }
+    else if(count ==2)
+    {
+      count++;
+      return 200;
+    }
+    else if(count ==3)
+    {
+      count++;
+      return 160;
+    }
+    else if(count ==4)
+    {
+      count++;
+      return 100;
+    }
+  })
+  .attr('cy', function(d){
+    if(count1 == 0)
+    {  
+      count1++;
+      return 100;
+    }
+    else if(count1 == 1)
+    {
+      count1++;
+      return 100;
+    }
+    else if(count1 ==2)
+    {
+      count1++;
+      return 180;
+    }
+    else if(count1 ==3)
+    {
+      count1++;
+      return 150;
+    }
+    else if(count1 ==4)
+    {
+      count1++;
+      return 200;
+    }
+  })
+  .attr('r', (d)=> d.sales/500)
+  .attr('fill', (d,i)=>color(d.label))
+  .on("mousemove", function(d) {
             var html = "";
   
             html += "<div class=\"tooltip_kv\">";
             html += "<span class=\"tooltip_key\">";
-            html += id_name_map[d.id];
+            html += d.label;
             
             html += "</span>";
             html += "<span class=\"tooltip_value\">";
-            html += "Poverty rate: "+(valueById.get(d.id) ? valueFormat(valueById.get(d.id)) : "")+"%";
+            html += "Poverty rate: "+getRate(d.label)+"%";
             html += "<br>";
-            html += "Total population: "+(numById.get(d.id) ? valueFormat(numById.get(d.id)) : "");
+            html += "Total population: "+d.sales;
             html += "";
             html += "</span>";
             html += "</div>";
-            
             $("#tooltip-container").html(html);
             $(this).attr("fill-opacity", "0.8");
             $("#tooltip-container").show();
             
             var coordinates = d3.mouse(this);
-            
-            var map_width = $('.states-choropleth')[0].getBoundingClientRect().width;
-            
-            if (d3.event.layerX < map_width / 2) {
+          
               d3.select("#tooltip-container")
                 .style("top", (d3.event.layerY + 15) + "px")
                 .style("left", (d3.event.layerX + 15) + "px");
-            } else {
-              var tooltip_width = $("#tooltip-container").width();
-              d3.select("#tooltip-container")
-                .style("top", (d3.event.layerY + 15) + "px")
-                .style("left", (d3.event.layerX - tooltip_width - 30) + "px");
-            }
+
         })
-        .on("mouseout", function() {
+      .on("mouseout", function() {
                 $(this).attr("fill-opacity", "1.0");
                 $("#tooltip-container").hide();
             });
-  
-    svg.append("path")
-        .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
-        .attr("class", "states")
-        .attr("transform", "scale(" + SCALE + ")")
-        .attr("d", path);
-  });
-  
-  });
-});
 
+
+
+
+
+
+  });
 
 </script>
+
 <script language="JavaScript">
 function refresh()
 {
