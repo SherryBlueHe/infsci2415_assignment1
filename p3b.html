@@ -89,14 +89,23 @@ body {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.1.0/topojson.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
 <script>
+  headline = "Poverty Rates of US states ";
+  init_year = 1990;
 
-    var  myselect=document.getElementById("Year");
-    var index =myselect.selectedIndex ; 
-    var year = myselect.options[index].value;
+    d3.select("body").insert("p", ":first-child").append("input")
+        .attr("type", "range")
+        .attr("min", "1990")
+        .attr("max", "2015")
+        .attr("value", init_year)
+        .attr("id", "year");
 
-d3.csv("data/by_race.csv", function(data) {
-   
-    console.log(data[25].Year);
+    d3.select("body").insert("h2", ":first-child").text(headline + init_year);
+
+  d3.select("#year").on("input", function() { 
+    d3.select("body").select("h2").text(headline + this.value);
+   year = this.value;
+    d3.csv("data/by_race.csv", function(data) {
+
      var config = {"color1":"#d3e5ff","color2":"#08306B"};
   
   var WIDTH = 800, HEIGHT = 500;
@@ -231,7 +240,6 @@ function color(race){
   });
 
 
-
 var data1 = [{
   label: "White",
   sales: whiteByYear.get(year)
@@ -269,16 +277,19 @@ function getRate(race)
 }
 var count = 0;
 var count1 = 0;
+g.remove()
 var g = d3.select('#chart')
   .selectAll("g")
   .data(data1)
   .enter()
   .append('g')
+
 g.append("circle")
   .attr('cx', function(d){
     if(count == 0)
     {  
       count++;
+      console.log(count)
       return 80;
     }
     else if(count == 1)
@@ -363,11 +374,12 @@ g.append("circle")
             });
 
 
-
-
-
-
   });
+
+
+
+  })
+
 
 </script>
 

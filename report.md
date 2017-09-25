@@ -41,6 +41,11 @@ Screenshots:
 ![](screenshot/p2-2015.png)  
 
 
+![](screenshot/p3a.png)  
+![](screenshot/p3a1.png)  
+
+
+
 ##### Visualization III: How the data change between 1990 and 2015, by state and by race
 
 For the state, we use a US map to display all the states on a map. Because the dataset it mainly focus on the poverty rates, we choose color to highlight the poverty rates directly. In our visualization, we use color white to black to show the poverty rate changes and a mouseover interactive to show precise data(total number, poverty rate).  
@@ -53,3 +58,7 @@ For the race, we use the line-plot to show the tendency of poverty rate changes,
 ### Reference:
 
 1. D3js v4 Stacked Bar Chart - with Tooltip Hover, Mike Foster, [https://bl.ocks.org/mjfoster83/7c9bdfd714ab2f2e39dd5c09057a55a0](https://bl.ocks.org/mjfoster83/7c9bdfd714ab2f2e39dd5c09057a55a0).
+
+2. US States Map - VIDA, [https://vida.io/gists/vfP7KiHLfDbnDWBsX](https://vida.io/gists/vfP7KiHLfDbnDWBsX)
+
+3. D3 slider map - Tom Schulze, [http://bl.ocks.org/tomschulze/961d57bd1bbd2a9ef993f2e8645cb8d2](http://bl.ocks.org/tomschulze/961d57bd1bbd2a9ef993f2e8645cb8d2)

@@ -51,6 +51,8 @@ body {
 
 </style>
 
+
+<p> This data shows poverty rate of US 51 states from 1990 to 2015. Color can reflect poverty rates. The darker color means higher poverty rate. Mouse over on states can show specific data. Drag time slider can change time.</p>
 <div id="slider"></div>
 
 <div id="tooltip-container"></div>
@@ -123,12 +125,12 @@ body {
   }
   
   function valueFormat(d) {
-    if (d > 1000000000) {
-      return Math.round(d / 1000000000 * 10) / 10 + "B";
-    } else if (d > 1000000) {
-      return Math.round(d / 1000000 * 10) / 10 + "M";
+    if (d > 1000000) {
+      return Math.round(d / 1000000 * 10) / 10 + "B";
     } else if (d > 1000) {
-      return Math.round(d / 1000 * 10) / 10 + "K";
+      return Math.round(d / 1000 * 10) / 10 + "M";
+    } else if (d > 1) {
+      return Math.round(d * 10) / 10 + "K";
     } else {
       return d;
     }
@@ -197,9 +199,9 @@ d3.json("us.json", function(error, us) {
             
             html += "</span>";
             html += "<span class=\"tooltip_value\">";
-            html += "Poverty rate: "+(valueById.get(d.id) ? valueFormat(valueById.get(d.id)) : "")+"%";
+            html += "Poverty rate: "+valueById.get(d.id)+"%";
             html += "<br>";
-            html += "Total population: "+(numById.get(d.id) ? valueFormat(numById.get(d.id)) : "");
+            html += "Total population: "+numById.get(d.id)+"K";
             html += "";
             html += "</span>";
             html += "</div>";
@@ -233,7 +235,7 @@ d3.json("us.json", function(error, us) {
 })
 }
 
-  var config = {"color1":"#ffffff","color2":"#000000","stateDataColumn":"State","valueDataColumn":"Percent","Total_number":"Total"};
+  var config = {"color1":"#E0E0E0","color2":"#000000","stateDataColumn":"State","valueDataColumn":"Percent","Total_number":"Total"};
 
 
 
@@ -327,13 +329,12 @@ if(i ==  colors.length-1)
    .text("")
 }
 
-
-
-  showmap("data/1990.csv");
+showmap("data/1990.csv");
 
 
 
 </script>
+
 <script language="JavaScript">
 function refresh()
 {
