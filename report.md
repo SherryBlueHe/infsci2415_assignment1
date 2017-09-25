@@ -36,6 +36,8 @@ The disadvantage of this display is that we will lose percentage information. To
 
 
 ##### Visualization III: How the data change between 1990 and 2015, by state and by race
+For the state, we use a US map to display all the states on a map. Because the dataset it mainly focue on the poverty rates, we choose color to highlight the poverty rates directly. In our visualization, we use color white to black to show the poverty rate changes and a mouseover interactive to show percise data(total number, poverty rate).
+For the race, we use the line-plot to show the tendency of poverty rate changes, becasue it is most direct and clear way to show tendency.  We also try to use a map to show the results. The area of circle shows the total numbers. The color shows the rates. Later we add interactions to show details about data.
 
 
 ### Discussion:
