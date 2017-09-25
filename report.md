@@ -34,6 +34,13 @@ This task asks us to create three bar charts. Since in the dataset we have "Tota
 
 The disadvantage of this display is that we will lose percentage information. To improve the stacked bar chart display, we added a tip hover using d3, so that when the mouse move to the bar, the absolute number and percentage can be displayed in a small floating window.
 
+screenshots:
+
+![](screenshots/p2-1995.png)  
+![](screenshots/p2-2005.png)  
+![](screenshots/p2-2015.png)  
+
+
 
 ##### Visualization III: How the data change between 1990 and 2015, by state and by race
 
