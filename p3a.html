@@ -137,8 +137,6 @@ body {
 function showmap(name){
   d3.csv(name, function(data) {
    
-    console.log(data[0].Percent);
- 
 
   var config = {"color1":"#ffffff","color2":"#000000","stateDataColumn":"State","valueDataColumn":"Percent","Total_number":"Total"};
   
@@ -175,9 +173,13 @@ function showmap(name){
   var quantize = d3.scale.quantize()
       .domain([0, 1.0])
       .range(d3.range(COLOR_COUNTS).map(function(i) { return i; }));
-  
-  var path = d3.geo.path();
  
+   quantize.domain([d3.min(data, function(d){
+         
+            return +d[MAP_VALUE]; }),
+    d3.max(data, function(d){ 
+       
+            return +d[MAP_VALUE]; })]);
   
   d3.tsv("us-state-names.tsv", function(error, names) {
   
@@ -193,31 +195,21 @@ function showmap(name){
     var id = name_id_map[d[MAP_STATE]];
     valueById.set(id, +d[MAP_VALUE]); 
     numById.set(id,+d[MAP_TOTAL]);
-  });
-  
-  quantize.domain([d3.min(data, function(d){
-         
-            return +d[MAP_VALUE]; }),
-    d3.max(data, function(d){ 
-       
-            return +d[MAP_VALUE]; })]);
-  
 
-  d3.json("us.json", function(error, us) {
-    svg.append("g")
-        .attr("class", "states-choropleth")
-      .selectAll("path")
-        .data(topojson.feature(us, us.objects.states).features)
-      .enter().append("path")
-        .attr("transform", "scale(" + SCALE + ")")
+  });
+ }); //d3.tsv
+
+d3.json("us.json", function(error, us) {
+    svg.select("g").selectAll("path")
         .style("fill", function(d) {
+          console.log(valueById.get(d.id))
           if (valueById.get(d.id)) {
             var i = quantize(valueById.get(d.id));
             var color = colors[i].getColors();
             return "rgb(" + color.r + "," + color.g +
                 "," + color.b + ")";
           } else {
-            return "";
+            return "Grey";
           }
         })
         .attr("d", path)
@@ -260,6 +252,28 @@ function showmap(name){
                 $(this).attr("fill-opacity", "1.0");
                 $("#tooltip-container").hide();
             });
+
+});
+
+})
+}
+
+  showmap("data/1990.csv");
+
+ 
+  var path = d3.geo.path();
+  var svg = d3.select("#canvas-svg").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+  
+  d3.json("us.json", function(error, us) {
+    svg.append("g")
+        .attr("class", "states-choropleth")
+      .selectAll("path")
+        .data(topojson.feature(us, us.objects.states).features)
+      .enter().append("path")
+        .attr("transform", "scale(" + SCALE + ")")
+        .attr("d", path)
   
     svg.append("path")
         .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
@@ -268,21 +282,9 @@ function showmap(name){
         .attr("d", path);
 
   });
-  
-  });
- });
-}
-
-showmap("data/1990.csv");
-
-
-
-  var svg = d3.select("#canvas-svg").append("svg")
-      .attr("width", width)
-      .attr("height", height);
-
 
   d3.select("#year").on("input", function() { 
+
     name = "data/"+ this.value + ".csv"
     d3.select("body").select("h2").text(headline + this.value);
     showmap(name);

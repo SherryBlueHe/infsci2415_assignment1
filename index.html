@@ -210,11 +210,9 @@ d3.csv(name, function(data) {
     numById.set(id,+d[MAP_TOTAL]);
   });
   
-  quantize.domain([d3.min(data, function(d){
-         
+  quantize.domain([d3.min(data, function(d){ 
             return +d[MAP_VALUE]; }),
     d3.max(data, function(d){ 
-       
             return +d[MAP_VALUE]; })]);
   
   d3.json("us.json", function(error, us) {
