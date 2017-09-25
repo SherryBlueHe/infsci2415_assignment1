@@ -19,6 +19,11 @@ body {
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
 <script>
+/*
+This part of code referenced Mike Foster’s Block 7c9bdfd714ab2f2e39dd5c09057a55a0
+"D3js v4 Stacked Bar Chart - with Tooltip Hover", see
+https://bl.ocks.org/mjfoster83/7c9bdfd714ab2f2e39dd5c09057a55a0
+*/
 // create the svg
 var svg = d3.select("svg"),
     margin = {top: 20, right: 20, bottom: 30, left: 40},
@@ -41,18 +46,22 @@ var z = d3.scaleOrdinal()
     .range(["steelblue","lightblue"]);
 
 // load the csv and create the chart
-d3.csv("bar_chart_data/2005.csv", function(d, i, columns) {
-  for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
-  d.total = t;
+d3.csv("data/2005.csv", function(d, i, columns) {
+  for (i = 1, t = 0; i < columns.length; ++i)
+  // parse the numbers
+  d.Number = +d.Number;
+  // since we are using a stack, manipulate total to total-number
+  d.Total = (+d.Total - +d.Number);
+  d.Percent = (d.Percent);
   return d;
 }, function(error, data) {
   if (error) throw error;
 
-  var keys = data.columns.slice(1);
+  // select only total and number for stack
+  var keys = data.columns.slice(2,4).reverse();
 
-  //data.sort(function(a, b) { return b.total - a.total; });
-  x.domain(data.map(function(d) { return d.State; }));
-  y.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
+  x.domain(data.map(function(d) { return d.State_Short; }));
+  y.domain([0, d3.max(data, function(d) { return d.Total; })]).nice();
   z.domain(keys);
 
   g.append("g")
@@ -63,7 +72,7 @@ d3.csv("bar_chart_data/2005.csv", function(d, i, columns) {
     .selectAll("rect")
     .data(function(d) { return d; })
     .enter().append("rect")
-      .attr("x", function(d) { return x(d.data.State); })
+      .attr("x", function(d) { return x(d.data.State_Short); })
       .attr("y", function(d) { return y(d[1]); })
       .attr("height", function(d) { return y(d[0]) - y(d[1]); })
       .attr("width", x.bandwidth())
@@ -74,7 +83,7 @@ d3.csv("bar_chart_data/2005.csv", function(d, i, columns) {
       var xPosition = d3.mouse(this)[0] - 5;
       var yPosition = d3.mouse(this)[1] - 5;
       tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-      tooltip.select("text").text( Math.round( d[0]/(d[1]+d[0])*100*100 )/100 + "%" );
+      tooltip.select("text").text(d.data.Percent+"%");
     });
 
   g.append("g")
@@ -92,6 +101,20 @@ d3.csv("bar_chart_data/2005.csv", function(d, i, columns) {
       .attr("fill", "#000")
       .attr("font-weight", "bold")
       .attr("text-anchor", "start");
+
+  // add instruction on y axis
+  g.append("g")
+    .attr("class", "axis")
+    .call(d3.axisLeft(y).ticks(null, "s"))
+  .append("text")
+    .attr("x", 2)
+    .attr("y", y(y.ticks().pop()) + 0.5)
+    .attr("dy", "0.32em")
+    .attr("transform","translate(10,-5), rotate(90)")
+    .attr("fill", "#000")
+    .attr("font-weight", "bold")
+    .attr("text-anchor", "start")
+    .text("Population - Number in thousands");
 
   var legend = g.append("g")
       .attr("font-family", "sans-serif")
@@ -113,6 +136,7 @@ d3.csv("bar_chart_data/2005.csv", function(d, i, columns) {
       .attr("y", 9.5)
       .attr("dy", "0.32em")
       .text(function(d) { return d; });
+
 });
 
   // Prep the tooltip bits, initial display is hidden
