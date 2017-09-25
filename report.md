@@ -36,9 +36,9 @@ The disadvantage of this display is that we will lose percentage information, wh
 
 Screenshots:
 
-![](screenshots/p2-1995.png)  
-![](screenshots/p2-2005.png)  
-![](screenshots/p2-2015.png)  
+![](screenshot/p2-1995.png)  
+![](screenshot/p2-2005.png)  
+![](screenshot/p2-2015.png)  
 
 
 ##### Visualization III: How the data change between 1990 and 2015, by state and by race
