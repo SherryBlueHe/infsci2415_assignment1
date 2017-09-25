@@ -30,21 +30,22 @@ To display a group of time-series data, we have several of choices: index charts
 
 ##### Visualization II: Three bar charts corresponding to poverty of the states in 1995, 2005, and 2015
 
-This task asks us to create three bar charts. Since in the dataset we have "Total" number of surveyed people, "Number" of poverty and "Percent" of poverty, it is naturally to use stacked bar chart to display these data: every bar should represent a state, for each bar the larger scale should be the total number, and the smaller scale is the poverty number.
+This task asks us to create three bar charts. Since in the dataset we have "Total" number of surveyed people, "Number" of poverty, which is a part of total number, it is naturally to use stacked bar chart to display this relationship: every bar should represent a state, for each bar the larger scale should be the total number, and the smaller scale is the poverty number.
 
-The disadvantage of this display is that we will lose percentage information. To improve the stacked bar chart display, we added a tip hover using d3, so that when the mouse move to the bar, the absolute number and percentage can be displayed in a small floating window.
+The disadvantage of this display is that we will lose percentage information, which is actually more important to display the changes of poverty. To improve the stacked bar chart display, we added a tip hover using d3, so that when the mouse move to the bar, the absolute number and percentage can be displayed in a small floating window. To get a better comparison, we also adjust the y axis in all three bar charts to be on the same scale.
 
-screenshots:
+Screenshots:
 
 ![](screenshots/p2-1995.png)  
 ![](screenshots/p2-2005.png)  
 ![](screenshots/p2-2015.png)  
 
 
-
 ##### Visualization III: How the data change between 1990 and 2015, by state and by race
-For the state, we use a US map to display all the states on a map. Because the dataset it mainly focue on the poverty rates, we choose color to highlight the poverty rates directly. In our visualization, we use color white to black to show the poverty rate changes and a mouseover interactive to show percise data(total number, poverty rate).
-For the race, we use the line-plot to show the tendency of poverty rate changes, becasue it is most direct and clear way to show tendency.  We also try to use a map to show the results. The area of circle shows the total numbers. The color shows the rates. Later we add interactions to show details about data.
+
+For the state, we use a US map to display all the states on a map. Because the dataset it mainly focus on the poverty rates, we choose color to highlight the poverty rates directly. In our visualization, we use color white to black to show the poverty rate changes and a mouseover interactive to show precise data(total number, poverty rate).  
+
+For the race, we use the line-plot to show the tendency of poverty rate changes, because it is most direct and clear way to show tendency.  We also try to use a map to show the results. The area of circle shows the total numbers. The color shows the rates. Later we add interactions to show details about data.
 
 
 ### Discussion:
