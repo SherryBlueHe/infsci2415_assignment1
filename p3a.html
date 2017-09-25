@@ -6,8 +6,9 @@ and open the template in the editor.
 -->
 <html> 
   <head> 
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-        
+
+<link rel="stylesheet" type="text/css" href="d3slider/d3.slider.css" media="screen" />
+<script src="d3slider/d3.v3.min.js"></script>
 <meta charset="utf-8">
 <style>
 
@@ -49,35 +50,8 @@ body {
 }
 
 </style>
-<select id="Year"  name="1" onchange="refresh()">   
-  <option   value="2015">2015</option>   
-  <option   value="2014">2014</option>   
-  <option   value="2013">2013</option>  
-  <option   value="2012">2012</option>  
-  <option   value="2011">2011</option>  
-  <option   value="2010">2010</option>  
-  <option   value="2009">2009</option>  
-  <option   value="2008">2008</option>  
-  <option   value="2007">2007</option>  
-  <option   value="2006">2006</option>  
-  <option   value="2005">2005</option>  
-  <option   value="2004">2004</option>  
-  <option   value="2003">2003</option>  
-  <option   value="2002">2002</option>
-  <option   value="2001">2001</option>
-  <option   value="2000">2000</option>
-  <option   value="1999">1999</option>
-  <option   value="1998">1998</option>    
-  <option   value="1997">1997</option>  
-  <option   value="1996">1996</option>  
-  <option   value="1995">1995</option>  
-  <option   value="1994">1994</option>  
-  <option   value="1993">1993</option>  
-  <option   value="1992">1992</option>  
-  <option   value="1991">1991</option>  
-  <option   value="1990">1990</option> 
-</select>
 
+<div id="slider"></div>
 
 <div id="tooltip-container"></div>
 
@@ -86,27 +60,33 @@ body {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.1.0/topojson.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+ <script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="d3slider/d3.slider.js"></script>
 <script>
+  headline = "Poverty Rates of US states";
+  init_year = 1990;
 
-    var  myselect=document.getElementById("Year");
-    var index =myselect.selectedIndex ; 
-    var name = myselect.options[index].value;
-    
-    name = "data/"+ name + ".csv"
-    console.log(name);
-d3.csv(name, function(data) {
-   
-    console.log(data[0].Percent);
- 
+    d3.select("body").insert("p", ":first-child").append("input")
+        .attr("type", "range")
+        .attr("min", "1990")
+        .attr("max", "2015")
+        .attr("value", init_year)
+        .attr("id", "year");
 
-  var config = {"color1":"#ffffff","color2":"#000000","stateDataColumn":"State","valueDataColumn":"Percent","Total_number":"Total"};
+    d3.select("body").insert("h2", ":first-child").text(headline + init_year);
+
+
+  var WIDTH = 1000, HEIGHT = 700;
+    var SCALE = 1;
   
-  var WIDTH = 800, HEIGHT = 500;
+
+    var width = WIDTH;
+      
+    var height = HEIGHT;
+
+     var COLOR_COUNTS = 20;
   
-  var COLOR_COUNTS = 20;
-  
-  var SCALE = 0.7;
-  
+
   function Interpolate(start, end, steps, count) {
       var s = start,
           e = end,
@@ -153,6 +133,14 @@ d3.csv(name, function(data) {
       return d;
     }
   }
+
+function showmap(name){
+  d3.csv(name, function(data) {
+   
+    console.log(data[0].Percent);
+ 
+
+  var config = {"color1":"#ffffff","color2":"#000000","stateDataColumn":"State","valueDataColumn":"Percent","Total_number":"Total"};
   
   var COLOR_FIRST = config.color1, COLOR_LAST = config.color2;
   
@@ -167,8 +155,7 @@ d3.csv(name, function(data) {
   var MAP_VALUE = config.valueDataColumn;
   var MAP_TOTAL = config.Total_number;
   
-  var width = WIDTH,
-      height = HEIGHT;
+
   
   var valueById = d3.map();
   var numById = d3.map();
@@ -190,11 +177,7 @@ d3.csv(name, function(data) {
       .range(d3.range(COLOR_COUNTS).map(function(i) { return i; }));
   
   var path = d3.geo.path();
-  
-  var svg = d3.select("#canvas-svg").append("svg")
-      .attr("width", width)
-      .attr("height", height);
-
+ 
   
   d3.tsv("us-state-names.tsv", function(error, names) {
   
@@ -219,6 +202,7 @@ d3.csv(name, function(data) {
        
             return +d[MAP_VALUE]; })]);
   
+
   d3.json("us.json", function(error, us) {
     svg.append("g")
         .attr("class", "states-choropleth")
@@ -282,9 +266,27 @@ d3.csv(name, function(data) {
         .attr("class", "states")
         .attr("transform", "scale(" + SCALE + ")")
         .attr("d", path);
+
   });
   
   });
+ });
+}
+
+showmap("data/1990.csv");
+
+
+
+  var svg = d3.select("#canvas-svg").append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+
+  d3.select("#year").on("input", function() { 
+    name = "data/"+ this.value + ".csv"
+    d3.select("body").select("h2").text(headline + this.value);
+    showmap(name);
+
 });
 
 
