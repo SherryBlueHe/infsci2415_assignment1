@@ -3,11 +3,11 @@
 
 ### Team Member and Contribution:
 
-He, Jiexiao  
+He, Jiexiao jih102@pitt.edu   
 Song, Chen chs222@pitt.edu  
 Xie, Jingran jix73@pitt.edu  
 
-Jiexiao completed the first visualization: a time-series plot to show how the poverty by race change from 1990 to 2015. Chen did the data preprocessing, drafted the report and completed the second visualization: three bar charts corresponding to poverty of the states in 1995, 2005, and 2015. Jingran completed the third visualization: how the data change between 1990 and 2015, by state and by race. And we discussed the methods to preprocess the data and design the visualizations together.
+Jiexiao completed the first visualization: a time-series plot to show how the poverty by race change from 1990 to 2015. Chen did the data preprocessing, drafted the report and completed the second visualization: three bar charts corresponding to poverty of the states in 1995, 2005, and 2015. Jingran completed the third visualization: how the data change between 1990 and 2015, by state and by race. We discussed the methods to preprocess the data and design the visualizations together.
 
 
 ### Exploration and Preprocessing of the Dataset:
@@ -27,12 +27,16 @@ After dealing with these two crucial problems, we also did several other steps i
 
 To display a group of time-series data, we have several of choices: index charts, stacked charts, small multiples, horizon graphs, etc. In D1 dataset, "Total" is the total number of people participant the survey and it changes over time. Since we have different bases for every year, the absolute values are not very useful to show the poverty by race change along time, so we decided to use percentage numbers in visualization. However, our race identifications contain overlaps, stacked charts may not suitable here since the total percentage will be over 100. Therefore, we decide to use multiple line plot to display the poverty percentage of every race changing along time.  
 
+Screenshots:
+
+Please reference p1.html for the source code.
+
 
 ##### Visualization II: Three bar charts corresponding to poverty of the states in 1995, 2005, and 2015
 
 This task asks us to create three bar charts. Since in the dataset we have "Total" number of surveyed people, "Number" of poverty, which is a part of total number, it is naturally to use stacked bar chart to display this relationship: every bar should represent a state, for each bar the larger scale should be the total number, and the smaller scale is the poverty number.
 
-The disadvantage of this display is that we will lose percentage information, which is actually more important to display the changes of poverty. To improve the stacked bar chart display, we added a tip hover using d3, so that when the mouse move to the bar, the absolute number and percentage can be displayed in a small floating window. To get a better comparison, we also adjust the y axis in all three bar charts to be on the same scale.
+The disadvantage of this display is that we will lose percentage information. To improve the stacked bar chart display, we added a mouse hover section, so that when the mouse move to the bar, the absolute numbers and percentage can be displayed in a small floating window. To get a better comparison, we also adjust the y axis in all three bar charts to be on the same scale.
 
 Screenshots:
 
@@ -40,28 +44,29 @@ Screenshots:
 ![](screenshot/p2-2005.png)  
 ![](screenshot/p2-2015.png)  
 
+Please reference p2-1995.html, p2-2005.html and p2-2015.html for the source code.   
 
 
+##### Visualization III: How the data change between 1990 and 2015, by state and by race  
 
+Since the two datasets are not related to each other, it will be better that we create two separate charts, one for by-state visualization, the other for by-race visualization.
 
-##### Visualization III: How the data change between 1990 and 2015, by state and by race
+For the by-state visualization, we use a US map to display all the states on a 2D map. Because the dataset mainly focus on the poverty rates, we use color to show the poverty rates changing directly. In our visualization, we use color white to black to show the poverty rate changes and a mouseover interactive to show precise data (total population and poverty rate).  
 
-For the state, we use a US map to display all the states on a map. Because the dataset it mainly focus on the poverty rates, we choose color to show the poverty rates changing directly. In our visualization, we use color white to black to show the poverty rate changes and a mouseover interactive to show precise data(total number, poverty rate).  
+Screenshots (before and after move the time slider):
 
-For the race, we use the line-plot to show the tendency of poverty rate changes, because it is the most efficient and clear way to show tendency. Then we add a poverty number plot to show how the number change with year. These two plots can already show all the necessery change for the D1 dataset.
-
-Screenshots:
 ![](screenshot/p3a.png)  
-![](screenshot/p3a1.png)  
+![](screenshot/p3a1.png)
 
+For the by-race visualization, we use the multiple line plot to show the tendency of poverty rate changes, because it is the most efficient and clear way to show tendency. Then we add a poverty number plot to show how the number change with year. These two plots can already show all the important change for the D1 dataset.
 
+Please reference p3a.html and p3c.html for the source code.
 
-### Discussion:
 
 ### Reference:
 
 1. D3js v4 Stacked Bar Chart - with Tooltip Hover, Mike Foster, [https://bl.ocks.org/mjfoster83/7c9bdfd714ab2f2e39dd5c09057a55a0](https://bl.ocks.org/mjfoster83/7c9bdfd714ab2f2e39dd5c09057a55a0).
 
-2. US States Map - VIDA, [https://vida.io/gists/vfP7KiHLfDbnDWBsX](https://vida.io/gists/vfP7KiHLfDbnDWBsX)
+2. US States Map - VIDA, [https://vida.io/gists/vfP7KiHLfDbnDWBsX](https://vida.io/gists/vfP7KiHLfDbnDWBsX).
 
-3. D3 slider map - Tom Schulze, [http://bl.ocks.org/tomschulze/961d57bd1bbd2a9ef993f2e8645cb8d2](http://bl.ocks.org/tomschulze/961d57bd1bbd2a9ef993f2e8645cb8d2)
+3. D3 slider map - Tom Schulze, [http://bl.ocks.org/tomschulze/961d57bd1bbd2a9ef993f2e8645cb8d2](http://bl.ocks.org/tomschulze/961d57bd1bbd2a9ef993f2e8645cb8d2).
