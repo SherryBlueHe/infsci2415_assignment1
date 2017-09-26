@@ -3,7 +3,7 @@
 
 ### Team Member and Contribution:
 
-He, Jiexiao  
+He, Jiexiao jih102@pitt.edu
 Song, Chen chs222@pitt.edu  
 Xie, Jingran jix73@pitt.edu  
 
