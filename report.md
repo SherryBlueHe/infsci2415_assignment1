@@ -41,16 +41,19 @@ Screenshots:
 ![](screenshot/p2-2015.png)  
 
 
-![](screenshot/p3a.png)  
-![](screenshot/p3a1.png)  
 
 
 
 ##### Visualization III: How the data change between 1990 and 2015, by state and by race
 
-For the state, we use a US map to display all the states on a map. Because the dataset it mainly focus on the poverty rates, we choose color to highlight the poverty rates directly. In our visualization, we use color white to black to show the poverty rate changes and a mouseover interactive to show precise data(total number, poverty rate).  
+For the state, we use a US map to display all the states on a map. Because the dataset it mainly focus on the poverty rates, we choose color to show the poverty rates changing directly. In our visualization, we use color white to black to show the poverty rate changes and a mouseover interactive to show precise data(total number, poverty rate).  
 
-For the race, we use the line-plot to show the tendency of poverty rate changes, because it is most direct and clear way to show tendency.  We also try to use a map to show the results. The area of circle shows the total numbers. The color shows the rates. Later we add interactions to show details about data.
+For the race, we use the line-plot to show the tendency of poverty rate changes, because it is the most efficient and clear way to show tendency. Then we add a poverty number plot to show how the number change with year. These two plots can already show all the necessery change for the D1 dataset.
+
+Screenshots:
+![](screenshot/p3a.png)  
+![](screenshot/p3a1.png)  
+
 
 
 ### Discussion:
