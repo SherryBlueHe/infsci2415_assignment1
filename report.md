@@ -25,7 +25,7 @@ After dealing with these two crucial problems, we also did several other steps i
 
 ##### Visualization I: A time-series plot to show how the poverty by race change from 1990 to 2015
 
-To display a group of time-series data, we have several of choices: index charts, stacked charts, small multiples, horizon graphs, etc. In D1 dataset, "Total" is the total number of people participant the survey and it changes over time. Since we have different bases for every year, the absolute values are not very useful to show the poverty by race change along time, so we decided to use percentage numbers in visualization. However, our race identifications contain overlaps, stacked charts may not suitable here since the total percentage will be over 100. Therefore, we decide to use multiple line plot to display the poverty percentage of every race changing along time.  
+To display a group of time-series data, we have several of choices: index charts, stacked charts, small multiples, horizon graphs, etc. In D1 dataset, "Total" is the total number of people participant the survey and it changes over time. Since we have different bases for every year, the absolute values are not very useful to show the poverty by race change along time, so we decided to use percentage numbers in visualization. However, our race identifications contain overlaps, stacked charts may not suitable here since the total percentage will be over 100 and different every year. Therefore, we decide to use multiple line plot to display the poverty percentage of every race changing along time. To emphasis the data elements in 1995, 2005 and 2015, we also add mouse hover windows to display the numbers in the three years.
 
 Screenshots:
 
@@ -61,7 +61,7 @@ Screenshots (before and after move the time slider):
 ![](screenshot/p3a.png)  
 ![](screenshot/p3a1.png)
 
-For the by-race visualization, we use the multiple line plot to show the tendency of poverty rate changes, because it is the most efficient and clear way to show tendency. Then we add a poverty number plot to show how the number change with year. These two plots can already show all the important change for the D1 dataset.
+For the by-race visualization, as we discussed in the previous part, multiple line plot could be a good way to show the tendency of poverty rate changes, because it is the most efficient and clear way to show tendency. To show all the important information in D1 dataset, we use two multiple line plots in the visualization, one for percentage numbers and the other for the absolute poverty population. With both the two plots, it could be more clearly that how poverty by race change along time. 
 
 ![](screenshot/p3a1.png)  
 ![](screenshot/population.jpeg)
