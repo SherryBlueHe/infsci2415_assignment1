@@ -65,7 +65,7 @@ Screenshots (before and after move the time slider):
 For the by-race visualization, as we discussed in the previous part, multiple line plot could be a good way to show the tendency of poverty rate changes, because it is the most efficient and clear way to show tendency. To show all the important information in D1 dataset, we use two multiple line plots in the visualization, one for percentage numbers and the other for the absolute poverty population. With both the two plots, it could be more clearly that how poverty by race change along time.
 
 ![](screenshot/p1.png)  
-![](screenshot/population.jpeg)
+![](screenshot/population.png)
 
 Please reference p3a.html and p3c.html for the source code.
 
