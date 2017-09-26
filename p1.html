@@ -34,6 +34,8 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
 <script>
+
+d3.select("body").insert("h2", ":first-child").text("5 Races' Poverty Rates changing with Time from 1990 to 2015");
 var svg = d3.select("svg"),
     margin = {top: 20, right: 80, bottom: 30, left: 50},
     width = svg.attr("width") - margin.left - margin.right,
@@ -112,15 +114,15 @@ svg.append("line")
             html += "1995";
             html += "</span>";
             html += "<span class=\"tooltip_value\">";
-            html += "Poverty rate: "+"white"+"67.1%";
+            html += "Poverty rate(white): "+"67.1%";
             html += "<br>";
-            html += "Poverty rate: "+"white not hispanic"+"44.7%";
+            html += "Poverty rate(white not hispanic): "+"44.7%";
             html += "<br>";
-            html += "Poverty rate: "+"black"+"27.1%";
+            html += "Poverty rate(black): "+"27.1%";
             html += "<br>";
-            html += "Poverty rate: "+"Asian"+"3.9%";
+            html += "Poverty rate(Asian): "+"3.9%";
             html += "<br>";
-            html += "Poverty rate: "+"hispanic"+"23.5%";
+            html += "Poverty rate(hispanic): "+"23.5%";
             html += "<br>";
             html += "";
             html += "</span>";
@@ -152,15 +154,15 @@ svg.append("line")
             html += "2005";
             html += "</span>";
             html += "<span class=\"tooltip_value\">";
-            html += "Poverty rate: "+"white"+"67.3%";
+            html += "Poverty rate(white): "+"67.3%";
             html += "<br>";
-            html += "Poverty rate: "+"white not hispanic"+"43.9%";
+            html += "Poverty rate(white not hispanic): "+"43.9%";
             html += "<br>";
-            html += "Poverty rate: "+"black"+"25.8%";
+            html += "Poverty rate(black): "+"25.8%";
             html += "<br>";
-            html += "Poverty rate: "+"Asian"+"4%";
+            html += "Poverty rate(Asian): "+"4%";
             html += "<br>";
-            html += "Poverty rate: "+"hispanic"+"25.4%";
+            html += "Poverty rate(hispanic): "+"25.4%";
             html += "<br>";
             html += "";
             html += "</span>";
@@ -191,15 +193,15 @@ svg.append("line")
             html += "<span class=\"tooltip_key\">";
             html += "2015";
             html += "</span>";
-            html += "Poverty rate: "+"white"+"66.2%";
+            html += "Poverty rate(white): "+"66.2%";
             html += "<br>";
-            html += "Poverty rate: "+"white not hispanic"+"41.2%";
+            html += "Poverty rate(white not hispanic): "+"41.2%";
             html += "<br>";
-            html += "Poverty rate: "+"black"+"25%";
+            html += "Poverty rate(black): "+"25%";
             html += "<br>";
-            html += "Poverty rate: "+"Asian"+"5.2%";
+            html += "Poverty rate(Asian): "+"5.2%";
             html += "<br>";
-            html += "Poverty rate: "+"hispanic"+"28.1%";
+            html += "Poverty rate(hispanic): "+"28.1%";
             html += "<br>";
             html += "";
             html += "</span>";

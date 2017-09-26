@@ -29,8 +29,9 @@ To display a group of time-series data, we have several of choices: index charts
 
 Screenshots:
 
-![](screenshot/WechatIMG278.jpeg)
-![](screenshot/2015.jpeg)
+![](screenshot/p1.jpeg)
+![](screenshot/p1-1995.jpeg)
+![](screenshot/p1-2005.jpeg)
 
 Please reference p1.html for the source code.
 
