@@ -51,7 +51,7 @@ var line = d3.line()
     .curve(d3.curveBasis)
     .x(function(d) { return x(d.Year); })
     .y(function(d) { return y(d.Population); });
-d3.csv("populationbyrace.csv", type, function(error, data) {
+d3.csv("data/populationbyrace.csv", type, function(error, data) {
   if (error) throw error;
   var cities = data.columns.slice(1).map(function(id) {
     return {
