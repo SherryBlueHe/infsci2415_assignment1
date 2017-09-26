@@ -29,9 +29,9 @@ To display a group of time-series data, we have several of choices: index charts
 
 Screenshots:
 
-![](screenshot/p1.jpeg)
-![](screenshot/p1-1995.jpeg)
-![](screenshot/p1-2005.jpeg)
+![](screenshot/p1.png)
+![](screenshot/p1-1995.png)
+![](screenshot/p1-2005.png)
 
 Please reference p1.html for the source code.
 
@@ -62,9 +62,12 @@ Screenshots (before and after move the time slider):
 ![](screenshot/p3a.png)  
 ![](screenshot/p3a1.png)
 
+<<<<<<< HEAD
 For the by-race visualization, as we discussed in the previous part, multiple line plot could be a good way to show the tendency of poverty rate changes, because it is the most efficient and clear way to show tendency. To show all the important information in D1 dataset, we use two multiple line plots in the visualization, one for percentage numbers and the other for the absolute poverty population. With both the two plots, it could be more clearly that how poverty by race change along time. 
+=======
+For the by-race visualization, we use the multiple line plot to show the tendency of poverty rate changes, because it is the most efficient and clear way to show tendency, just the same as the problem 1. Then we add a poverty number plot to show how the number change with year. These two plots can already show all the important change for the D1 dataset.
+>>>>>>> 0b2b3f99cd9fb397a1b892e76700d797369d127b
 
-![](screenshot/p3a1.png)  
 ![](screenshot/population.jpeg)
 
 Please reference p3a.html and p3c.html for the source code.
